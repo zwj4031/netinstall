@@ -1,0 +1,4 @@
+启动网络pe的参数 
+chainloader install.efi proxydhcp=192.168.0.222 netiso=/pe.iso
+chainloader install.efi proxydhcp=192.168.0.222 netwim=/pe.wim
+网络环境不好时自行修改超时 httptimeout=后面的数字 ，网络越差的改越大
