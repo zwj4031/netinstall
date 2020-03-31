@@ -1,0 +1,12 @@
+[dhcp]
+start=1
+proxydhcp=1
+httpd=1
+bind=1
+poolsize=998
+root=D:\netinstall-master
+filename=ipxe-undionly.bios
+altfilename=netinstall.ipxe
+[frmDHCPServer]
+top=208
+left=208

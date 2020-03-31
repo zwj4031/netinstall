@@ -1,0 +1,6 @@
+#!ipxe
+set setupwim= /boot/boot.wim
+set setupiso= /win.iso
+set httptimeout= 6
+isset ${proxydhcp/dhcp-server} && chain http://${proxydhcp/dhcp-server}/netinstall.${platform} proxydhcp=${proxydhcp/dhcp-server} setupwim=${setupwim=} setupiso=${setupiso=} httptimeout=6 ||
+chain http://${next-server}/netinstall.efi proxydhcp=${next-server} setupwim=/boot/boot.wim setupiso=${setupiso=} httptimeout=${httptimeout=}
