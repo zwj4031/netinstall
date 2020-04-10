@@ -1,0 +1,305 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<unattend xmlns="urn:schemas-microsoft-com:unattend">
+
+
+	<settings pass="windowsPE">
+
+		<component name="Microsoft-Windows-International-Core-WinPE" processorArchitecture="x86" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS" xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+			<InputLocale>0804:00000804</InputLocale>
+			<SystemLocale>zh-CN</SystemLocale>
+			<UILanguage>zh-CN</UILanguage>
+			<UILanguageFallback>zh-CN</UILanguageFallback>
+			<UserLocale>zh-CN</UserLocale>
+			<SetupUILanguage>
+				<UILanguage>zh-CN</UILanguage>
+			</SetupUILanguage>
+		</component>
+
+		<component name="Microsoft-Windows-Setup" processorArchitecture="x86" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS" xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+			
+			<Diagnostics>
+				<OptIn>false</OptIn>
+			</Diagnostics>
+			<DynamicUpdate>
+				<Enable>false</Enable>
+				<WillShowUI>OnError</WillShowUI>
+			</DynamicUpdate>
+			<ImageInstall>
+				<OSImage>
+					<WillShowUI>OnError</WillShowUI>
+					<InstallFrom>
+						<MetaData wcm:action="add">
+							<Key>/IMAGE/INDEX</Key>
+							<Value>1</Value>
+						</MetaData>
+					</InstallFrom>
+				</OSImage>
+			</ImageInstall>
+			<UserData>
+						<!-- 以下为ProductKey -->
+			<ProductKey>
+<Key>KTNPV-KTRK4-3RRR8-39X6W-W44T3</Key>
+</ProductKey>
+				<AcceptEula>true</AcceptEula>
+			</UserData>
+		</component>
+
+		<component name="Microsoft-Windows-International-Core-WinPE" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS" xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+			<InputLocale>0804:00000804</InputLocale>
+			<SystemLocale>zh-CN</SystemLocale>
+			<UILanguage>zh-CN</UILanguage>
+			<UILanguageFallback>zh-CN</UILanguageFallback>
+			<UserLocale>zh-CN</UserLocale>
+			<SetupUILanguage>
+				<UILanguage>zh-CN</UILanguage>
+			</SetupUILanguage>
+		</component>
+
+		<component name="Microsoft-Windows-Setup" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS" xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+		 
+
+ <!-- 以下为磁盘部署 -->
+<DiskConfiguration>
+  <Disk wcm:action="add">
+    <DiskID>0</DiskID> 
+    <WillWipeDisk>true</WillWipeDisk> 
+    <CreatePartitions>
+ <!-- 创建分区决定大小 -->
+      <!-- 系统盘 -->
+      <CreatePartition wcm:action="add">
+        <Order>1</Order> 
+        <Type>Primary</Type> 
+        <Size>102400</Size> 
+      </CreatePartition>
+      <!-- 剩下的分为扩展分区 -->
+      <CreatePartition wcm:action="add">
+        <Order>2</Order> 
+        <Type>Extended</Type> 
+        <Extend>true</Extend> 
+      </CreatePartition>
+      <!-- 创建逻辑分区D盘数据 -->
+      <CreatePartition wcm:action="add">
+        <Order>3</Order> 
+        <Type>Logical</Type> 
+        <Size>102400</Size> 
+      </CreatePartition>
+      <!-- 创建逻辑分区E盘数据，随便指定大小，但不能剩余容量，会自动吃光剩余容量-->
+      <CreatePartition wcm:action="add">
+        <Order>4</Order> 
+        <Type>Logical</Type> 
+        <Size>100</Size> 
+          <!-- Note: To create a logical partition that fills 
+                     the rest of the extended partition, create the 
+                     data partition with an initial size of 100 MB.
+                     This will be changed in the ModifyPartition section. -->
+      </CreatePartition>
+    </CreatePartitions>
+    <ModifyPartitions>
+ <!-- 更改分区用途 -->
+      <!-- 系统盘 -->
+      <ModifyPartition wcm:action="add">
+        <Order>1</Order> 
+        <PartitionID>1</PartitionID> 
+        <Label>系统</Label> 
+		<Letter>C</Letter> 
+        <Format>NTFS</Format> 
+		 <Active>true</Active>     
+      </ModifyPartition>
+      <!-- Extended partition:
+           This partition does not need receive a partition number, 
+           nor does it need to be modified -->
+      <!-- D盘数据 -->
+      <ModifyPartition wcm:action="add">
+        <Order>2</Order>
+        <PartitionID>2</PartitionID> 
+        <Label>文档</Label> 
+        <Letter>D</Letter> 
+        <Format>NTFS</Format> 
+      </ModifyPartition>
+      <!-- E盘软件 -->
+      <ModifyPartition wcm:action="add">
+        <Order>3</Order> 
+        <PartitionID>3</PartitionID> 
+        <Label>软件</Label> 
+        <Letter>E</Letter> 
+        <Format>NTFS</Format> 
+        <Extend>true</Extend>
+          <!-- Note: When modifying a logical partition, setting
+                     "ModifyPartition|Extend=true" sets the partition to  
+                     fill the remainder of the extended partition.
+                     This overrides the "CreatePartition|Size" value. -->
+      </ModifyPartition>
+    </ModifyPartitions>
+  </Disk>
+  <WillShowUI>OnError</WillShowUI> 
+</DiskConfiguration>
+ <!-- 以上为磁盘部署 -->
+
+
+			<Diagnostics>
+				<OptIn>false</OptIn>
+			</Diagnostics>
+			<DynamicUpdate>
+				<Enable>false</Enable>
+				<WillShowUI>OnError</WillShowUI>
+			</DynamicUpdate>
+			<ImageInstall>
+				<OSImage>
+					<WillShowUI>OnError</WillShowUI>
+					 <!-- 以分卷方式选择系统安装名称方式index改为NAME -->
+					<InstallFrom>
+						<MetaData wcm:action="add">
+							<Key>/IMAGE/INDEX</Key>
+							<Value>1</Value>
+						</MetaData>
+					</InstallFrom>
+					<InstallTo>
+                  <DiskID>0</DiskID>
+                <PartitionID>1</PartitionID>
+</InstallTo>
+				</OSImage>
+			</ImageInstall>
+			<UserData>
+			<!-- 以下为ProductKey -->
+			<ProductKey>
+<Key>KTNPV-KTRK4-3RRR8-39X6W-W44T3</Key>
+</ProductKey>
+				<AcceptEula>true</AcceptEula>
+			</UserData>
+		</component>
+
+	</settings>
+
+
+
+	<settings pass="oobeSystem">
+
+		<component name="Microsoft-Windows-International-Core" processorArchitecture="x86" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS" xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+			<InputLocale>0804:00000804</InputLocale>
+			<SystemLocale>zh-CN</SystemLocale>
+			<UILanguage>zh-CN</UILanguage>
+			<UILanguageFallback>zh-CN</UILanguageFallback>
+			<UserLocale>zh-CN</UserLocale>
+		</component>
+
+		<component name="Microsoft-Windows-Shell-Setup" processorArchitecture="x86" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS" xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+			<TimeZone>China Standard Time</TimeZone>
+			<OOBE>
+				<HideEULAPage>true</HideEULAPage>
+				<HideWirelessSetupInOOBE>true</HideWirelessSetupInOOBE>
+				<NetworkLocation>Home</NetworkLocation>
+				<ProtectYourPC>3</ProtectYourPC>
+				<SkipMachineOOBE>true</SkipMachineOOBE>
+				<SkipUserOOBE>true</SkipUserOOBE>
+			</OOBE>
+			<UserAccounts>
+				<AdministratorPassword>
+					<PlainText>true</PlainText>
+					<Value></Value>
+				</AdministratorPassword>
+				<LocalAccounts>
+					<LocalAccount wcm:action="add">
+						<Group>Administrators</Group>
+						<Name>Administrator</Name>
+						<Password>
+							<PlainText>true</PlainText>
+							<Value></Value>
+						</Password>
+					</LocalAccount>
+				</LocalAccounts>
+			</UserAccounts>
+		</component>
+
+		<component name="Microsoft-Windows-International-Core" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS" xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+			<InputLocale>0804:00000804</InputLocale>
+			<SystemLocale>zh-CN</SystemLocale>
+			<UILanguage>zh-CN</UILanguage>
+			<UILanguageFallback>zh-CN</UILanguageFallback>
+			<UserLocale>zh-CN</UserLocale>
+		</component>
+
+		<component name="Microsoft-Windows-Shell-Setup" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS" xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+			<TimeZone>China Standard Time</TimeZone>
+			<OOBE>
+				<HideEULAPage>true</HideEULAPage>
+				<HideWirelessSetupInOOBE>true</HideWirelessSetupInOOBE>
+				<NetworkLocation>Home</NetworkLocation>
+				<ProtectYourPC>3</ProtectYourPC>
+				<SkipMachineOOBE>true</SkipMachineOOBE>
+				<SkipUserOOBE>true</SkipUserOOBE>
+			</OOBE>
+			<UserAccounts>
+				<AdministratorPassword>
+					<PlainText>true</PlainText>
+					<Value></Value>
+				</AdministratorPassword>
+				<LocalAccounts>
+					<LocalAccount wcm:action="add">
+						<Group>Administrators</Group>
+						<Name>Administrator</Name>
+						<Password>
+							<PlainText>true</PlainText>
+							<Value></Value>
+						</Password>
+					</LocalAccount>
+				</LocalAccounts>
+			</UserAccounts>
+		</component>
+
+	</settings>
+
+
+
+	<settings pass="specialize">
+
+		<component name="Microsoft-Windows-Deployment" processorArchitecture="x86" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS" xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+			<RunSynchronous>
+				<RunSynchronousCommand wcm:action="add">
+					<Order>1</Order>
+					<Path>net user Administrator /active:Yes</Path>
+					<WillReboot>Never</WillReboot>
+				</RunSynchronousCommand>
+			</RunSynchronous>
+		</component>
+
+		<component name="Microsoft-Windows-Security-SPP-UX" processorArchitecture="x86" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS" xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+			<SkipAutoActivation>true</SkipAutoActivation>
+		</component>
+
+		<component name="Microsoft-Windows-Shell-Setup" processorArchitecture="x86" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS" xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+			<ComputerName>*</ComputerName>
+		</component>
+
+		<component name="Microsoft-Windows-UnattendedJoin" processorArchitecture="x86" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS" xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+			<Identification>
+				<JoinWorkgroup>WorkGroup</JoinWorkgroup>
+			</Identification>
+		</component>
+
+		<component name="Microsoft-Windows-Deployment" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS" xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+			<RunSynchronous>
+				<RunSynchronousCommand wcm:action="add">
+					<Order>1</Order>
+					<Path>net user Administrator /active:Yes</Path>
+					<WillReboot>Never</WillReboot>
+				</RunSynchronousCommand>
+			</RunSynchronous>
+		</component>
+
+		<component name="Microsoft-Windows-Security-SPP-UX" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS" xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+			<SkipAutoActivation>true</SkipAutoActivation>
+		</component>
+
+		<component name="Microsoft-Windows-Shell-Setup" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS" xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+			<ComputerName>*</ComputerName>
+		</component>
+
+		<component name="Microsoft-Windows-UnattendedJoin" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS" xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+			<Identification>
+				<JoinWorkgroup>Workgroup</JoinWorkgroup>
+			</Identification>
+		</component>
+
+	</settings>
+
+</unattend>

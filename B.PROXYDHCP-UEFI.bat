@@ -26,8 +26,9 @@ echo #!ipxe
 echo set setupwim^= /boot/boot.wim
 echo set setupiso^= %setupiso%
 echo set httptimeout^= 6
-echo isset ${proxydhcp/dhcp-server} ^&^& chain http://^${proxydhcp/dhcp-server}/netinstall.${platform} proxydhcp=^${proxydhcp/dhcp-server} setupwim=${setupwim=} setupiso=${setupiso=} httptimeout=6 ^|^|
-echo chain http://^${next-server}/netinstall.efi proxydhcp=^${next-server} setupwim=/boot/boot.wim setupiso=${setupiso=} httptimeout=${httptimeout^=}
+echo set autounattend^=
+echo isset ${proxydhcp/dhcp-server} ^&^& chain http://^${proxydhcp/dhcp-server}/netinstall.${platform} proxydhcp=^${proxydhcp/dhcp-server} setupwim=${setupwim=} setupiso=${setupiso=} httptimeout=${httptimeout=} autounattend=${autounattend=} ^|^|
+echo chain http://^${next-server}/netinstall.${platform} proxydhcp=^${next-server} setupwim=${setupwim=} setupiso=${setupiso=} httptimeout=${httptimeout=} autounattend=${autounattend=} 
 ) >%~dp0\netinstall.ipxe
 (
 echo [dhcp]
