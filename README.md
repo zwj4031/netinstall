@@ -6,5 +6,4 @@
 
 视频教程 https://youtu.be/2nO9BTSVG1g
 
-![](E:\2019桌面\GIF.gif)
-
+![GIF.gif](https://github.com/zwj4031/netinstall/blob/master/Sample/GIF.gif?raw=true)
