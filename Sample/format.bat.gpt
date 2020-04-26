@@ -1,0 +1,31 @@
+pause
+pause
+pause
+:三分区
+(
+echo select disk 0   
+echo clean    
+echo convert gpt   
+echo create partition efi size=300   
+echo format quick fs=fat32  
+echo create partition primary size=102400
+echo format quick fs=ntfs label=System
+echo select partition 2  
+echo assign letter = G   
+echo create partition primary size=102400
+echo format quick fs=ntfs label=Soft
+echo select partition 3 
+echo assign letter = H 
+echo create partition primary
+echo format quick fs=ntfs label=Document
+echo select partition 4 
+echo assign letter = I 
+)>~3.tmp
+diskpart /s ~3.tmp
+
+::echo list volume|diskpart|findstr /i Document >~tmp
+::for /f "tokens=2" %%a in (~tmp) do set part=%%a
+::cmd /c "echo sele disk 0 & echo sele part %part% & echo set id=12" | diskpart
+::del ~tmp
+::echo 找到盘 %part%
+pause

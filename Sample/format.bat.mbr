@@ -1,0 +1,29 @@
+echo warning!!!!!!!!!!!!!!!
+echo 即将分区！！
+ping -n 10 127.0 >nul
+:三分区mbr
+(
+echo select disk 0
+echo  clean 
+echo  create partition primary size=102400
+echo  active 
+echo  format fs=ntfs quick label=System
+echo  select partition 1 
+echo  assign letter =G
+echo  create partition extended  
+echo  create partition logical size=102400
+echo  format fs=ntfs quick label=Soft
+echo  select partition  2 
+echo  assign letter =H
+echo  create partition logical   
+echo  format fs=ntfs quick label=Document
+echo  select partition  3 
+echo  assign letter =I
+)>~3.tmp
+diskpart /s ~3.tmp
+
+::echo list volume|diskpart|findstr /i Document >~tmp
+::for /f "tokens=2" %%a in (~tmp) do set part=%%a
+::cmd /c "echo sele disk 0 & echo sele part %part% & echo set id=12" | diskpart
+::del ~tmp
+::echo 找到盘 %part%
