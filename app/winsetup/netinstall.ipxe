@@ -1,7 +1,0 @@
-#!ipxe
-set setupwim= /boot/boot.wim
-set setupiso= /cn_windows_7_ultimate_with_sp1_x64_dvd_618537.iso
-set httptimeout= 6
-set autounattend=
-isset ${proxydhcp/dhcp-server} && chain http://${proxydhcp/dhcp-server}/app/winsetup/netinstall.${platform} proxydhcp=${proxydhcp/dhcp-server} setupwim=${setupwim=} setupiso=${setupiso=} httptimeout=${httptimeout=} autounattend=${autounattend=} ||
-chain http://${next-server}/app/winsetup/netinstall.${platform} proxydhcp=${next-server} setupwim=${setupwim=} setupiso=${setupiso=} httptimeout=${httptimeout=} autounattend=${autounattend=} 
